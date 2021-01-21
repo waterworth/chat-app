@@ -24,12 +24,15 @@ model User {
   name    String?
   profile Profile?
   Message Message[]
+  Room    Room?     @relation(fields: [roomId], references: [id])
+  roomId  Int?
 }
 
 model Room {
   id       Int       @id @default(autoincrement())
   name     String
   messages Message[]
+  users    User[]
 }
 
 model Message {
