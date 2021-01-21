@@ -148,12 +148,21 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Mutation: {};
-  Query: {};
-  User: { // root type
-    email?: string | null; // String
+  Message: { // root type
     id?: number | null; // Int
-    name?: string | null; // String
+    text?: string | null; // String
+  }
+  Mutation: {};
+  Profile: { // root type
+    bio?: string | null; // String
+    id?: number | null; // Int
+  }
+  Query: {};
+  Room: { // root type
+    id?: number | null; // Int
+  }
+  User: { // root type
+    id?: number | null; // Int
   }
 }
 
@@ -168,30 +177,60 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Message: { // field return type
+    id: number | null; // Int
+    text: string | null; // String
+  }
   Mutation: { // field return type
     signupUser: NexusGenRootTypes['User'] | null; // User
   }
+  Profile: { // field return type
+    bio: string | null; // String
+    id: number | null; // Int
+    userProfile: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+  }
   Query: { // field return type
-    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    allMessages: Array<NexusGenRootTypes['Message'] | null> | null; // [Message]
+    allRooms: Array<NexusGenRootTypes['Room'] | null> | null; // [Room]
+    allUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+  }
+  Room: { // field return type
+    id: number | null; // Int
   }
   User: { // field return type
     email: string | null; // String
     id: number | null; // Int
     name: string | null; // String
+    profile: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Message: { // field return type name
+    id: 'Int'
+    text: 'String'
+  }
   Mutation: { // field return type name
     signupUser: 'User'
   }
+  Profile: { // field return type name
+    bio: 'String'
+    id: 'Int'
+    userProfile: 'User'
+  }
   Query: { // field return type name
-    users: 'User'
+    allMessages: 'Message'
+    allRooms: 'Room'
+    allUsers: 'User'
+  }
+  Room: { // field return type name
+    id: 'Int'
   }
   User: { // field return type name
     email: 'String'
     id: 'Int'
     name: 'String'
+    profile: 'Profile'
   }
 }
 

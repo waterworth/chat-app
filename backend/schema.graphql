@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+type Message {
+  id: Int
+  text: String
+}
+
 input MessageCreateManyWithoutRoomInput {
   connect: [MessageWhereUniqueInput!]
   connectOrCreate: [MessageCreateOrConnectWithoutroomInput!]
@@ -42,6 +47,12 @@ type Mutation {
   signupUser(data: UserCreateInput!): User
 }
 
+type Profile {
+  bio: String
+  id: Int
+  userProfile: [User]
+}
+
 input ProfileCreateOneWithoutUserInput {
   connect: ProfileWhereUniqueInput
   connectOrCreate: ProfileCreateOrConnectWithoutuserInput
@@ -63,7 +74,13 @@ input ProfileWhereUniqueInput {
 }
 
 type Query {
-  users: [User]
+  allMessages: [Message]
+  allRooms: [Room]
+  allUsers: [User]
+}
+
+type Room {
+  id: Int
 }
 
 input RoomCreateOneWithoutMessagesInput {
@@ -106,6 +123,7 @@ type User {
   email: String
   id: Int
   name: String
+  profile: [Profile]
 }
 
 input UserCreateInput {

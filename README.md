@@ -1,35 +1,34 @@
-# Getting Started with Create React App
+# Unnamed Chat App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The goal is to make a chat application that ties into Github. It will allow users to chat with other contributors on code repos in real time.
+
+## On download
+
+Download postgres.
+
+_TODO_ => This might be needed to be looked at as the code currently points towards my local postgresDB
+
+Run `npm i` on both the frontend and backend directories.
+
+Run `npx prisma studio` after Prisma is installed. Allows for GUI editing of the db.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### Front End Scripts
 
-Runs the app in the development mode.\
+#### `npm start`
+
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
+#### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -39,8 +38,52 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### Back End Scripts
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### `npm run dev`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Runs the back end in development mode.
+Does not compile or build any typescript files.
+Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
+
+#### `npm start`
+
+Runs the compiled backend code in server.
+Code must have been built using the `build` script, as well as exist in the dist/ folder.
+
+#### `npm clean`
+
+Deletes the dist/ folder.
+
+#### `npm build`
+
+Deletes the old dist/ folder, generates prisma and nexus and then rebuilds the dist/ folder.
+
+#### `npm generate`
+
+Generates both prisma and nexus code.
+
+#### `npm generate:prisma`
+
+Generates the prisma schema into usable code.
+
+#### `npm generate:nexus`
+
+Runs a uncompiled dev server with the updated graphql schema.
+
+## To Do List
+
+Front End:
+
+- Everything. Will update when this bridge is crossed.
+
+Back End:
+
+- Continue building out relations and db structure.
+- Write general queries and mutations.
+- Write specific queries and mutations.
+- Incorporate websockets w/ Apollo Server.
+- Set up subscription for messages.
+- Authentication with Github.
+- Feel free to work on anything else that interests you,
+  just make sure all other devs are on board with changes.
