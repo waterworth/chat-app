@@ -51,23 +51,23 @@ Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 Runs the compiled backend code in server.
 Code must have been built using the `build` script, as well as exist in the dist/ folder.
 
-#### `npm clean`
+#### `npm run clean`
 
 Deletes the dist/ folder.
 
-#### `npm build`
+#### `npm run build`
 
 Deletes the old dist/ folder, generates prisma and nexus and then rebuilds the dist/ folder.
 
-#### `npm generate`
+#### `npm run generate`
 
 Generates both prisma and nexus code.
 
-#### `npm generate:prisma`
+#### `npm run generate:prisma`
 
 Generates the prisma schema into usable code.
 
-#### `npm generate:nexus`
+#### `npm run generate:nexus`
 
 Runs a uncompiled dev server with the updated graphql schema.
 
