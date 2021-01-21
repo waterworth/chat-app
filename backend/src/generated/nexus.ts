@@ -187,6 +187,7 @@ export interface NexusGenFieldTypes {
     userId: number | null; // Int
   }
   Mutation: { // field return type
+    createRoom: NexusGenRootTypes['Room'] | null; // Room
     signupUser: NexusGenRootTypes['User'] | null; // User
   }
   Profile: { // field return type
@@ -222,6 +223,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'Int'
   }
   Mutation: { // field return type name
+    createRoom: 'Room'
     signupUser: 'User'
   }
   Profile: { // field return type name
@@ -251,6 +253,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createRoom: { // args
+      name: string; // String!
+      users: number[]; // [Int!]!
+    }
     signupUser: { // args
       data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
     }

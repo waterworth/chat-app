@@ -46,6 +46,7 @@ input MessageWhereUniqueInput {
 }
 
 type Mutation {
+  createRoom(name: String!, users: [Int!]!): Room
   signupUser(data: UserCreateInput!): User
 }
 

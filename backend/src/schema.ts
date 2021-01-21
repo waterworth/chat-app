@@ -1,6 +1,8 @@
 import {
   intArg,
+  list,
   makeSchema,
+  mutationField,
   nonNull,
   nullable,
   objectType,
@@ -61,12 +63,15 @@ const Room = objectType({
   definition(t) {
     t.model.id();
     t.model.name();
-    t.list.field('users', {
+    t.list.field('usersInRoom', {
       type: 'User',
       resolve(root, _args, ctx) {
-        return ctx.prisma.user.findMany({
+        return ctx.prisma.usersInRoom.findMany({
           where: {
-            roomId: root.id,
+            roomId: root.id as number,
+          },
+          include: {
+            user: true,
           },
         });
       },
@@ -93,6 +98,8 @@ const Message = objectType({
     t.model.roomId();
   },
 });
+
+const UsersInRoom = objectType({});
 
 // Queries
 
@@ -143,8 +150,23 @@ const Mutation = objectType({
   },
 });
 
+const createRoom = mutationField('createRoom', {
+  type: 'Room',
+  args: {
+    name: nonNull(stringArg()),
+    users: nonNull(list(nonNull(intArg()))),
+  },
+  resolve(_root, args, ctx) {
+    return ctx.prisma.room.create({
+      data: {
+        name: args.name,
+      },
+    });
+  },
+});
+
 export const schema = makeSchema({
-  types: [Query, Mutation, User, Message, Room, Profile, userById],
+  types: [Query, Mutation, User, Message, Room, Profile, userById, createRoom],
   plugins: [nexusPrisma({ experimentalCRUD: true })],
   outputs: {
     schema: __dirname + '/../schema.graphql',

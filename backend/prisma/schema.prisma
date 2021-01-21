@@ -19,20 +19,19 @@ model Profile {
 }
 
 model User {
-  id      Int       @id @default(autoincrement())
-  email   String    @unique
-  name    String?
-  profile Profile?
-  Message Message[]
-  Room    Room?     @relation(fields: [roomId], references: [id])
-  roomId  Int?
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  name        String?
+  profile     Profile?
+  Message     Message[]
+  UsersInRoom UsersInRoom[]
 }
 
 model Room {
-  id       Int       @id @default(autoincrement())
-  name     String
-  messages Message[]
-  users    User[]
+  id          Int           @id @default(autoincrement())
+  name        String
+  UsersInRoom UsersInRoom[]
+  Message     Message[]
 }
 
 model Message {
@@ -42,4 +41,13 @@ model Message {
   userId Int
   room   Room   @relation(fields: [roomId], references: [id])
   roomId Int
+}
+
+model UsersInRoom {
+  userId Int
+  roomId Int
+  user   User @relation(fields: [userId], references: [id])
+  room   Room @relation(fields: [roomId], references: [id])
+
+  @@id([userId, roomId])
 }
