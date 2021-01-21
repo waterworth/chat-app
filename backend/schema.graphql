@@ -4,7 +4,9 @@
 
 type Message {
   id: Int
+  roomId: Int
   text: String
+  userId: Int
 }
 
 input MessageCreateManyWithoutRoomInput {
@@ -50,7 +52,6 @@ type Mutation {
 type Profile {
   bio: String
   id: Int
-  userProfile: [User]
 }
 
 input ProfileCreateOneWithoutUserInput {
@@ -77,10 +78,14 @@ type Query {
   allMessages: [Message]
   allRooms: [Room]
   allUsers: [User]
+  userById(id: Int!): User
 }
 
 type Room {
   id: Int
+  messages: [Message]
+  name: String
+  users: [User]
 }
 
 input RoomCreateOneWithoutMessagesInput {
@@ -122,6 +127,7 @@ input RoomWhereUniqueInput {
 type User {
   email: String
   id: Int
+  messages: [Message]
   name: String
   profile: [Profile]
 }

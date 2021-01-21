@@ -150,7 +150,9 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Message: { // root type
     id?: number | null; // Int
+    roomId?: number | null; // Int
     text?: string | null; // String
+    userId?: number | null; // Int
   }
   Mutation: {};
   Profile: { // root type
@@ -160,6 +162,7 @@ export interface NexusGenObjects {
   Query: {};
   Room: { // root type
     id?: number | null; // Int
+    name?: string | null; // String
   }
   User: { // root type
     id?: number | null; // Int
@@ -179,7 +182,9 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Message: { // field return type
     id: number | null; // Int
+    roomId: number | null; // Int
     text: string | null; // String
+    userId: number | null; // Int
   }
   Mutation: { // field return type
     signupUser: NexusGenRootTypes['User'] | null; // User
@@ -187,19 +192,23 @@ export interface NexusGenFieldTypes {
   Profile: { // field return type
     bio: string | null; // String
     id: number | null; // Int
-    userProfile: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   Query: { // field return type
     allMessages: Array<NexusGenRootTypes['Message'] | null> | null; // [Message]
     allRooms: Array<NexusGenRootTypes['Room'] | null> | null; // [Room]
     allUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    userById: NexusGenRootTypes['User'] | null; // User
   }
   Room: { // field return type
     id: number | null; // Int
+    messages: Array<NexusGenRootTypes['Message'] | null> | null; // [Message]
+    name: string | null; // String
+    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   User: { // field return type
     email: string | null; // String
     id: number | null; // Int
+    messages: Array<NexusGenRootTypes['Message'] | null> | null; // [Message]
     name: string | null; // String
     profile: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
   }
@@ -208,7 +217,9 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Message: { // field return type name
     id: 'Int'
+    roomId: 'Int'
     text: 'String'
+    userId: 'Int'
   }
   Mutation: { // field return type name
     signupUser: 'User'
@@ -216,19 +227,23 @@ export interface NexusGenFieldTypeNames {
   Profile: { // field return type name
     bio: 'String'
     id: 'Int'
-    userProfile: 'User'
   }
   Query: { // field return type name
     allMessages: 'Message'
     allRooms: 'Room'
     allUsers: 'User'
+    userById: 'User'
   }
   Room: { // field return type name
     id: 'Int'
+    messages: 'Message'
+    name: 'String'
+    users: 'User'
   }
   User: { // field return type name
     email: 'String'
     id: 'Int'
+    messages: 'Message'
     name: 'String'
     profile: 'Profile'
   }
@@ -238,6 +253,11 @@ export interface NexusGenArgTypes {
   Mutation: {
     signupUser: { // args
       data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    }
+  }
+  Query: {
+    userById: { // args
+      id: number; // Int!
     }
   }
 }

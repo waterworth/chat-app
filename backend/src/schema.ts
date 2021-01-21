@@ -11,25 +11,6 @@ import { nexusPrisma } from 'nexus-plugin-prisma';
 
 // Object Types
 
-// const User = objectType({
-//   name: 'User',
-//   definition(t) {
-//     t.model.id();
-//     t.model.name();
-//     t.model.email();
-//     t.list.field('profile', {
-//       type: 'Profile',
-//       resolve(root, args, ctx) {
-//         return ctx.prisma.profile.findUnique({
-//           where: {
-//             userId: root.id as number,
-//           },
-//         });
-//       },
-//     });
-//   },
-// });
-
 const User = objectType({
   name: 'User',
   definition(t) {
@@ -48,9 +29,16 @@ const User = objectType({
       type: 'Profile',
       resolve(root, _args, ctx) {
         return ctx.prisma.profile.findMany({
-          include: {
-            user: false,
+          where: {
+            userId: root.id as number,
           },
+        });
+      },
+    });
+    t.list.field('messages', {
+      type: 'Message',
+      resolve(root, _args, ctx) {
+        return ctx.prisma.message.findMany({
           where: {
             userId: root.id as number,
           },
@@ -65,16 +53,6 @@ const Profile = objectType({
   definition(t) {
     t.model.id();
     t.model.bio();
-    t.list.field('userProfile', {
-      type: 'User',
-      resolve: (root, args, ctx) => {
-        return ctx.prisma.user.findUnique({
-          where: {
-            id: root.id as number,
-          },
-        });
-      },
-    });
   },
 });
 
@@ -82,6 +60,27 @@ const Room = objectType({
   name: 'Room',
   definition(t) {
     t.model.id();
+    t.model.name();
+    t.list.field('users', {
+      type: 'User',
+      resolve(root, _args, ctx) {
+        return ctx.prisma.user.findMany({
+          where: {
+            roomId: root.id,
+          },
+        });
+      },
+    });
+    t.list.field('messages', {
+      type: 'Message',
+      resolve(root, _args, ctx) {
+        return ctx.prisma.message.findMany({
+          where: {
+            roomId: root.id as number,
+          },
+        });
+      },
+    });
   },
 });
 
@@ -90,6 +89,8 @@ const Message = objectType({
   definition(t) {
     t.model.id();
     t.model.text();
+    t.model.userId();
+    t.model.roomId();
   },
 });
 
@@ -143,7 +144,7 @@ const Mutation = objectType({
 });
 
 export const schema = makeSchema({
-  types: [Query, Mutation, User, Message, Room, Profile],
+  types: [Query, Mutation, User, Message, Room, Profile, userById],
   plugins: [nexusPrisma({ experimentalCRUD: true })],
   outputs: {
     schema: __dirname + '/../schema.graphql',
