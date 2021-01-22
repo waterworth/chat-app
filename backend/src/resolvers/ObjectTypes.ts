@@ -5,16 +5,9 @@ export const User = objectType({
   name: 'User',
   definition(t) {
     t.model.id();
-    t.model.name({
-      resolve(parent) {
-        return parent.name as string;
-      },
-    });
-    t.model.email({
-      resolve(parent) {
-        return parent.email;
-      },
-    });
+    t.model.name();
+    t.model.email();
+    t.model.password();
     t.list.field('profile', {
       type: 'Profile',
       resolve(root, _args, ctx) {

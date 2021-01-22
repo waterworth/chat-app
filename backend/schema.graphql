@@ -17,9 +17,10 @@ type Message {
 type Mutation {
   addUserToRoom(roomId: Int!, userId: Int!): UsersInRoom
   createMessage(roomId: Int!, text: String!, userId: Int!): Message
-  createNewUser(email: String!, name: String!): User
+  createNewUser(email: String!, name: String!, password: String!): User
   createRoom(name: String!): Room
   deleteMessage(id: Int!): Message
+  login(email: String!, password: String!): User
 }
 
 type Profile {
@@ -44,6 +45,7 @@ type User {
   id: Int
   messages: [Message]
   name: String
+  password: String
   profile: [Profile]
 }
 
