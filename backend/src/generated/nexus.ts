@@ -38,10 +38,12 @@ export interface NexusGenInputs {
     where: NexusGenInputs['MessageWhereUniqueInput']; // MessageWhereUniqueInput!
   }
   MessageCreateWithoutRoomInput: { // input type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     text: string; // String!
     user: NexusGenInputs['UserCreateOneWithoutMessageInput']; // UserCreateOneWithoutMessageInput!
   }
   MessageCreateWithoutUserInput: { // input type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     room: NexusGenInputs['RoomCreateOneWithoutMessageInput']; // RoomCreateOneWithoutMessageInput!
     text: string; // String!
   }
@@ -176,10 +178,12 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
   Message: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: number | null; // Int
     roomId?: number | null; // Int
     text?: string | null; // String
@@ -216,13 +220,17 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Message: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     id: number | null; // Int
+    room: NexusGenRootTypes['Room'] | null; // Room
     roomId: number | null; // Int
     text: string | null; // String
+    user: NexusGenRootTypes['User'] | null; // User
     userId: number | null; // Int
   }
   Mutation: { // field return type
     addUserToRoom: NexusGenRootTypes['UsersInRoom'] | null; // UsersInRoom
+    createMessage: NexusGenRootTypes['Message'] | null; // Message
     createRoom: NexusGenRootTypes['Room'] | null; // Room
     signupUser: NexusGenRootTypes['User'] | null; // User
   }
@@ -260,13 +268,17 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Message: { // field return type name
+    createdAt: 'DateTime'
     id: 'Int'
+    room: 'Room'
     roomId: 'Int'
     text: 'String'
+    user: 'User'
     userId: 'Int'
   }
   Mutation: { // field return type name
     addUserToRoom: 'UsersInRoom'
+    createMessage: 'Message'
     createRoom: 'Room'
     signupUser: 'User'
   }
@@ -306,6 +318,11 @@ export interface NexusGenArgTypes {
   Mutation: {
     addUserToRoom: { // args
       roomId: number; // Int!
+      userId: number; // Int!
+    }
+    createMessage: { // args
+      roomId: number; // Int!
+      text: string; // String!
       userId: number; // Int!
     }
     createRoom: { // args

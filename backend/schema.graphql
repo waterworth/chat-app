@@ -2,10 +2,15 @@
 ### Do not make changes to this file directly
 
 
+scalar DateTime
+
 type Message {
+  createdAt: DateTime
   id: Int
+  room: Room
   roomId: Int
   text: String
+  user: User
   userId: Int
 }
 
@@ -32,11 +37,13 @@ input MessageCreateOrConnectWithoutuserInput {
 }
 
 input MessageCreateWithoutRoomInput {
+  createdAt: DateTime
   text: String!
   user: UserCreateOneWithoutMessageInput!
 }
 
 input MessageCreateWithoutUserInput {
+  createdAt: DateTime
   room: RoomCreateOneWithoutMessageInput!
   text: String!
 }
@@ -47,6 +54,7 @@ input MessageWhereUniqueInput {
 
 type Mutation {
   addUserToRoom(roomId: Int!, userId: Int!): UsersInRoom
+  createMessage(roomId: Int!, text: String!, userId: Int!): Message
   createRoom(name: String!): Room
   signupUser(data: UserCreateInput!): User
 }
