@@ -37,7 +37,7 @@ input MessageCreateWithoutRoomInput {
 }
 
 input MessageCreateWithoutUserInput {
-  room: RoomCreateOneWithoutMessagesInput!
+  room: RoomCreateOneWithoutMessageInput!
   text: String!
 }
 
@@ -46,7 +46,8 @@ input MessageWhereUniqueInput {
 }
 
 type Mutation {
-  createRoom(name: String!, users: [Int!]!): Room
+  addUserToRoom(roomId: Int!, userId: Int!): UsersInRoom
+  createRoom(name: String!): Room
   signupUser(data: UserCreateInput!): User
 }
 
@@ -79,6 +80,7 @@ type Query {
   allMessages: [Message]
   allRooms: [Room]
   allUsers: [User]
+  roomById(id: Int!): Room
   userById(id: Int!): User
 }
 
@@ -86,38 +88,38 @@ type Room {
   id: Int
   messages: [Message]
   name: String
-  users: [User]
+  userList: [UsersInRoom]
 }
 
-input RoomCreateOneWithoutMessagesInput {
+input RoomCreateOneWithoutMessageInput {
   connect: RoomWhereUniqueInput
-  connectOrCreate: RoomCreateOrConnectWithoutmessagesInput
-  create: RoomCreateWithoutMessagesInput
+  connectOrCreate: RoomCreateOrConnectWithoutMessageInput
+  create: RoomCreateWithoutMessageInput
 }
 
-input RoomCreateOneWithoutUsersInput {
+input RoomCreateOneWithoutUsersInRoomInput {
   connect: RoomWhereUniqueInput
-  connectOrCreate: RoomCreateOrConnectWithoutusersInput
-  create: RoomCreateWithoutUsersInput
+  connectOrCreate: RoomCreateOrConnectWithoutUsersInRoomInput
+  create: RoomCreateWithoutUsersInRoomInput
 }
 
-input RoomCreateOrConnectWithoutmessagesInput {
-  create: RoomCreateWithoutMessagesInput!
+input RoomCreateOrConnectWithoutMessageInput {
+  create: RoomCreateWithoutMessageInput!
   where: RoomWhereUniqueInput!
 }
 
-input RoomCreateOrConnectWithoutusersInput {
-  create: RoomCreateWithoutUsersInput!
+input RoomCreateOrConnectWithoutUsersInRoomInput {
+  create: RoomCreateWithoutUsersInRoomInput!
   where: RoomWhereUniqueInput!
 }
 
-input RoomCreateWithoutMessagesInput {
+input RoomCreateWithoutMessageInput {
   name: String!
-  users: UserCreateManyWithoutRoomInput
+  UsersInRoom: UsersInRoomCreateManyWithoutRoomInput
 }
 
-input RoomCreateWithoutUsersInput {
-  messages: MessageCreateManyWithoutRoomInput
+input RoomCreateWithoutUsersInRoomInput {
+  Message: MessageCreateManyWithoutRoomInput
   name: String!
 }
 
@@ -138,13 +140,7 @@ input UserCreateInput {
   Message: MessageCreateManyWithoutUserInput
   name: String
   profile: ProfileCreateOneWithoutUserInput
-  Room: RoomCreateOneWithoutUsersInput
-}
-
-input UserCreateManyWithoutRoomInput {
-  connect: [UserWhereUniqueInput!]
-  connectOrCreate: [UserCreateOrConnectWithoutRoomInput!]
-  create: [UserCreateWithoutRoomInput!]
+  UsersInRoom: UsersInRoomCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutMessageInput {
@@ -153,13 +149,19 @@ input UserCreateOneWithoutMessageInput {
   create: UserCreateWithoutMessageInput
 }
 
+input UserCreateOneWithoutUsersInRoomInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutUsersInRoomInput
+  create: UserCreateWithoutUsersInRoomInput
+}
+
 input UserCreateOrConnectWithoutMessageInput {
   create: UserCreateWithoutMessageInput!
   where: UserWhereUniqueInput!
 }
 
-input UserCreateOrConnectWithoutRoomInput {
-  create: UserCreateWithoutRoomInput!
+input UserCreateOrConnectWithoutUsersInRoomInput {
+  create: UserCreateWithoutUsersInRoomInput!
   where: UserWhereUniqueInput!
 }
 
@@ -167,14 +169,60 @@ input UserCreateWithoutMessageInput {
   email: String!
   name: String
   profile: ProfileCreateOneWithoutUserInput
-  Room: RoomCreateOneWithoutUsersInput
+  UsersInRoom: UsersInRoomCreateManyWithoutUserInput
 }
 
-input UserCreateWithoutRoomInput {
+input UserCreateWithoutUsersInRoomInput {
   email: String!
   Message: MessageCreateManyWithoutUserInput
   name: String
   profile: ProfileCreateOneWithoutUserInput
+}
+
+type UsersInRoom {
+  room: Room
+  roomId: Int
+  user: User
+  userId: Int
+}
+
+input UsersInRoomCreateManyWithoutRoomInput {
+  connect: [UsersInRoomWhereUniqueInput!]
+  connectOrCreate: [UsersInRoomCreateOrConnectWithoutroomInput!]
+  create: [UsersInRoomCreateWithoutRoomInput!]
+}
+
+input UsersInRoomCreateManyWithoutUserInput {
+  connect: [UsersInRoomWhereUniqueInput!]
+  connectOrCreate: [UsersInRoomCreateOrConnectWithoutuserInput!]
+  create: [UsersInRoomCreateWithoutUserInput!]
+}
+
+input UsersInRoomCreateOrConnectWithoutroomInput {
+  create: UsersInRoomCreateWithoutRoomInput!
+  where: UsersInRoomWhereUniqueInput!
+}
+
+input UsersInRoomCreateOrConnectWithoutuserInput {
+  create: UsersInRoomCreateWithoutUserInput!
+  where: UsersInRoomWhereUniqueInput!
+}
+
+input UsersInRoomCreateWithoutRoomInput {
+  user: UserCreateOneWithoutUsersInRoomInput!
+}
+
+input UsersInRoomCreateWithoutUserInput {
+  room: RoomCreateOneWithoutUsersInRoomInput!
+}
+
+input UsersInRoomUserIdRoomIdCompoundUniqueInput {
+  roomId: Int!
+  userId: Int!
+}
+
+input UsersInRoomWhereUniqueInput {
+  userId_roomId: UsersInRoomUserIdRoomIdCompoundUniqueInput
 }
 
 input UserWhereUniqueInput {

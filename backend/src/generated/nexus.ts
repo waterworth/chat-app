@@ -42,7 +42,7 @@ export interface NexusGenInputs {
     user: NexusGenInputs['UserCreateOneWithoutMessageInput']; // UserCreateOneWithoutMessageInput!
   }
   MessageCreateWithoutUserInput: { // input type
-    room: NexusGenInputs['RoomCreateOneWithoutMessagesInput']; // RoomCreateOneWithoutMessagesInput!
+    room: NexusGenInputs['RoomCreateOneWithoutMessageInput']; // RoomCreateOneWithoutMessageInput!
     text: string; // String!
   }
   MessageWhereUniqueInput: { // input type
@@ -64,30 +64,30 @@ export interface NexusGenInputs {
     id?: number | null; // Int
     userId?: number | null; // Int
   }
-  RoomCreateOneWithoutMessagesInput: { // input type
+  RoomCreateOneWithoutMessageInput: { // input type
     connect?: NexusGenInputs['RoomWhereUniqueInput'] | null; // RoomWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['RoomCreateOrConnectWithoutmessagesInput'] | null; // RoomCreateOrConnectWithoutmessagesInput
-    create?: NexusGenInputs['RoomCreateWithoutMessagesInput'] | null; // RoomCreateWithoutMessagesInput
+    connectOrCreate?: NexusGenInputs['RoomCreateOrConnectWithoutMessageInput'] | null; // RoomCreateOrConnectWithoutMessageInput
+    create?: NexusGenInputs['RoomCreateWithoutMessageInput'] | null; // RoomCreateWithoutMessageInput
   }
-  RoomCreateOneWithoutUsersInput: { // input type
+  RoomCreateOneWithoutUsersInRoomInput: { // input type
     connect?: NexusGenInputs['RoomWhereUniqueInput'] | null; // RoomWhereUniqueInput
-    connectOrCreate?: NexusGenInputs['RoomCreateOrConnectWithoutusersInput'] | null; // RoomCreateOrConnectWithoutusersInput
-    create?: NexusGenInputs['RoomCreateWithoutUsersInput'] | null; // RoomCreateWithoutUsersInput
+    connectOrCreate?: NexusGenInputs['RoomCreateOrConnectWithoutUsersInRoomInput'] | null; // RoomCreateOrConnectWithoutUsersInRoomInput
+    create?: NexusGenInputs['RoomCreateWithoutUsersInRoomInput'] | null; // RoomCreateWithoutUsersInRoomInput
   }
-  RoomCreateOrConnectWithoutmessagesInput: { // input type
-    create: NexusGenInputs['RoomCreateWithoutMessagesInput']; // RoomCreateWithoutMessagesInput!
+  RoomCreateOrConnectWithoutMessageInput: { // input type
+    create: NexusGenInputs['RoomCreateWithoutMessageInput']; // RoomCreateWithoutMessageInput!
     where: NexusGenInputs['RoomWhereUniqueInput']; // RoomWhereUniqueInput!
   }
-  RoomCreateOrConnectWithoutusersInput: { // input type
-    create: NexusGenInputs['RoomCreateWithoutUsersInput']; // RoomCreateWithoutUsersInput!
+  RoomCreateOrConnectWithoutUsersInRoomInput: { // input type
+    create: NexusGenInputs['RoomCreateWithoutUsersInRoomInput']; // RoomCreateWithoutUsersInRoomInput!
     where: NexusGenInputs['RoomWhereUniqueInput']; // RoomWhereUniqueInput!
   }
-  RoomCreateWithoutMessagesInput: { // input type
+  RoomCreateWithoutMessageInput: { // input type
     name: string; // String!
-    users?: NexusGenInputs['UserCreateManyWithoutRoomInput'] | null; // UserCreateManyWithoutRoomInput
+    UsersInRoom?: NexusGenInputs['UsersInRoomCreateManyWithoutRoomInput'] | null; // UsersInRoomCreateManyWithoutRoomInput
   }
-  RoomCreateWithoutUsersInput: { // input type
-    messages?: NexusGenInputs['MessageCreateManyWithoutRoomInput'] | null; // MessageCreateManyWithoutRoomInput
+  RoomCreateWithoutUsersInRoomInput: { // input type
+    Message?: NexusGenInputs['MessageCreateManyWithoutRoomInput'] | null; // MessageCreateManyWithoutRoomInput
     name: string; // String!
   }
   RoomWhereUniqueInput: { // input type
@@ -98,33 +98,33 @@ export interface NexusGenInputs {
     Message?: NexusGenInputs['MessageCreateManyWithoutUserInput'] | null; // MessageCreateManyWithoutUserInput
     name?: string | null; // String
     profile?: NexusGenInputs['ProfileCreateOneWithoutUserInput'] | null; // ProfileCreateOneWithoutUserInput
-    Room?: NexusGenInputs['RoomCreateOneWithoutUsersInput'] | null; // RoomCreateOneWithoutUsersInput
-  }
-  UserCreateManyWithoutRoomInput: { // input type
-    connect?: NexusGenInputs['UserWhereUniqueInput'][] | null; // [UserWhereUniqueInput!]
-    connectOrCreate?: NexusGenInputs['UserCreateOrConnectWithoutRoomInput'][] | null; // [UserCreateOrConnectWithoutRoomInput!]
-    create?: NexusGenInputs['UserCreateWithoutRoomInput'][] | null; // [UserCreateWithoutRoomInput!]
+    UsersInRoom?: NexusGenInputs['UsersInRoomCreateManyWithoutUserInput'] | null; // UsersInRoomCreateManyWithoutUserInput
   }
   UserCreateOneWithoutMessageInput: { // input type
     connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
     connectOrCreate?: NexusGenInputs['UserCreateOrConnectWithoutMessageInput'] | null; // UserCreateOrConnectWithoutMessageInput
     create?: NexusGenInputs['UserCreateWithoutMessageInput'] | null; // UserCreateWithoutMessageInput
   }
+  UserCreateOneWithoutUsersInRoomInput: { // input type
+    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['UserCreateOrConnectWithoutUsersInRoomInput'] | null; // UserCreateOrConnectWithoutUsersInRoomInput
+    create?: NexusGenInputs['UserCreateWithoutUsersInRoomInput'] | null; // UserCreateWithoutUsersInRoomInput
+  }
   UserCreateOrConnectWithoutMessageInput: { // input type
     create: NexusGenInputs['UserCreateWithoutMessageInput']; // UserCreateWithoutMessageInput!
     where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
   }
-  UserCreateOrConnectWithoutRoomInput: { // input type
-    create: NexusGenInputs['UserCreateWithoutRoomInput']; // UserCreateWithoutRoomInput!
+  UserCreateOrConnectWithoutUsersInRoomInput: { // input type
+    create: NexusGenInputs['UserCreateWithoutUsersInRoomInput']; // UserCreateWithoutUsersInRoomInput!
     where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
   }
   UserCreateWithoutMessageInput: { // input type
     email: string; // String!
     name?: string | null; // String
     profile?: NexusGenInputs['ProfileCreateOneWithoutUserInput'] | null; // ProfileCreateOneWithoutUserInput
-    Room?: NexusGenInputs['RoomCreateOneWithoutUsersInput'] | null; // RoomCreateOneWithoutUsersInput
+    UsersInRoom?: NexusGenInputs['UsersInRoomCreateManyWithoutUserInput'] | null; // UsersInRoomCreateManyWithoutUserInput
   }
-  UserCreateWithoutRoomInput: { // input type
+  UserCreateWithoutUsersInRoomInput: { // input type
     email: string; // String!
     Message?: NexusGenInputs['MessageCreateManyWithoutUserInput'] | null; // MessageCreateManyWithoutUserInput
     name?: string | null; // String
@@ -133,6 +133,37 @@ export interface NexusGenInputs {
   UserWhereUniqueInput: { // input type
     email?: string | null; // String
     id?: number | null; // Int
+  }
+  UsersInRoomCreateManyWithoutRoomInput: { // input type
+    connect?: NexusGenInputs['UsersInRoomWhereUniqueInput'][] | null; // [UsersInRoomWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['UsersInRoomCreateOrConnectWithoutroomInput'][] | null; // [UsersInRoomCreateOrConnectWithoutroomInput!]
+    create?: NexusGenInputs['UsersInRoomCreateWithoutRoomInput'][] | null; // [UsersInRoomCreateWithoutRoomInput!]
+  }
+  UsersInRoomCreateManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['UsersInRoomWhereUniqueInput'][] | null; // [UsersInRoomWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['UsersInRoomCreateOrConnectWithoutuserInput'][] | null; // [UsersInRoomCreateOrConnectWithoutuserInput!]
+    create?: NexusGenInputs['UsersInRoomCreateWithoutUserInput'][] | null; // [UsersInRoomCreateWithoutUserInput!]
+  }
+  UsersInRoomCreateOrConnectWithoutroomInput: { // input type
+    create: NexusGenInputs['UsersInRoomCreateWithoutRoomInput']; // UsersInRoomCreateWithoutRoomInput!
+    where: NexusGenInputs['UsersInRoomWhereUniqueInput']; // UsersInRoomWhereUniqueInput!
+  }
+  UsersInRoomCreateOrConnectWithoutuserInput: { // input type
+    create: NexusGenInputs['UsersInRoomCreateWithoutUserInput']; // UsersInRoomCreateWithoutUserInput!
+    where: NexusGenInputs['UsersInRoomWhereUniqueInput']; // UsersInRoomWhereUniqueInput!
+  }
+  UsersInRoomCreateWithoutRoomInput: { // input type
+    user: NexusGenInputs['UserCreateOneWithoutUsersInRoomInput']; // UserCreateOneWithoutUsersInRoomInput!
+  }
+  UsersInRoomCreateWithoutUserInput: { // input type
+    room: NexusGenInputs['RoomCreateOneWithoutUsersInRoomInput']; // RoomCreateOneWithoutUsersInRoomInput!
+  }
+  UsersInRoomUserIdRoomIdCompoundUniqueInput: { // input type
+    roomId: number; // Int!
+    userId: number; // Int!
+  }
+  UsersInRoomWhereUniqueInput: { // input type
+    userId_roomId?: NexusGenInputs['UsersInRoomUserIdRoomIdCompoundUniqueInput'] | null; // UsersInRoomUserIdRoomIdCompoundUniqueInput
   }
 }
 
@@ -167,6 +198,10 @@ export interface NexusGenObjects {
   User: { // root type
     id?: number | null; // Int
   }
+  UsersInRoom: { // root type
+    roomId?: number | null; // Int
+    userId?: number | null; // Int
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -187,6 +222,7 @@ export interface NexusGenFieldTypes {
     userId: number | null; // Int
   }
   Mutation: { // field return type
+    addUserToRoom: NexusGenRootTypes['UsersInRoom'] | null; // UsersInRoom
     createRoom: NexusGenRootTypes['Room'] | null; // Room
     signupUser: NexusGenRootTypes['User'] | null; // User
   }
@@ -198,13 +234,14 @@ export interface NexusGenFieldTypes {
     allMessages: Array<NexusGenRootTypes['Message'] | null> | null; // [Message]
     allRooms: Array<NexusGenRootTypes['Room'] | null> | null; // [Room]
     allUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    roomById: NexusGenRootTypes['Room'] | null; // Room
     userById: NexusGenRootTypes['User'] | null; // User
   }
   Room: { // field return type
     id: number | null; // Int
     messages: Array<NexusGenRootTypes['Message'] | null> | null; // [Message]
     name: string | null; // String
-    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    userList: Array<NexusGenRootTypes['UsersInRoom'] | null> | null; // [UsersInRoom]
   }
   User: { // field return type
     email: string | null; // String
@@ -212,6 +249,12 @@ export interface NexusGenFieldTypes {
     messages: Array<NexusGenRootTypes['Message'] | null> | null; // [Message]
     name: string | null; // String
     profile: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
+  }
+  UsersInRoom: { // field return type
+    room: NexusGenRootTypes['Room'] | null; // Room
+    roomId: number | null; // Int
+    user: NexusGenRootTypes['User'] | null; // User
+    userId: number | null; // Int
   }
 }
 
@@ -223,6 +266,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'Int'
   }
   Mutation: { // field return type name
+    addUserToRoom: 'UsersInRoom'
     createRoom: 'Room'
     signupUser: 'User'
   }
@@ -234,13 +278,14 @@ export interface NexusGenFieldTypeNames {
     allMessages: 'Message'
     allRooms: 'Room'
     allUsers: 'User'
+    roomById: 'Room'
     userById: 'User'
   }
   Room: { // field return type name
     id: 'Int'
     messages: 'Message'
     name: 'String'
-    users: 'User'
+    userList: 'UsersInRoom'
   }
   User: { // field return type name
     email: 'String'
@@ -249,19 +294,31 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
     profile: 'Profile'
   }
+  UsersInRoom: { // field return type name
+    room: 'Room'
+    roomId: 'Int'
+    user: 'User'
+    userId: 'Int'
+  }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addUserToRoom: { // args
+      roomId: number; // Int!
+      userId: number; // Int!
+    }
     createRoom: { // args
       name: string; // String!
-      users: number[]; // [Int!]!
     }
     signupUser: { // args
       data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
     }
   }
   Query: {
+    roomById: { // args
+      id: number; // Int!
+    }
     userById: { // args
       id: number; // Int!
     }

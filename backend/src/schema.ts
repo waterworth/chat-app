@@ -1,10 +1,10 @@
 import {
+  arg,
   intArg,
   list,
   makeSchema,
   mutationField,
   nonNull,
-  nullable,
   objectType,
   queryField,
   stringArg,
@@ -63,15 +63,14 @@ const Room = objectType({
   definition(t) {
     t.model.id();
     t.model.name();
-    t.list.field('usersInRoom', {
-      type: 'User',
+    t.list.field('userList', {
+      type: 'UsersInRoom',
       resolve(root, _args, ctx) {
         return ctx.prisma.usersInRoom.findMany({
           where: {
-            roomId: root.id as number,
-          },
-          include: {
-            user: true,
+            room: {
+              id: root.id as number,
+            },
           },
         });
       },
@@ -81,7 +80,7 @@ const Room = objectType({
       resolve(root, _args, ctx) {
         return ctx.prisma.message.findMany({
           where: {
-            roomId: root.id as number,
+            userId: root.id as number,
           },
         });
       },
@@ -99,7 +98,33 @@ const Message = objectType({
   },
 });
 
-const UsersInRoom = objectType({});
+const UsersInRoom = objectType({
+  name: 'UsersInRoom',
+  definition(t) {
+    t.model.userId();
+    t.model.roomId();
+    t.field('user', {
+      type: 'User',
+      resolve(root, _args, ctx) {
+        return ctx.prisma.user.findUnique({
+          where: {
+            id: root.userId as number,
+          },
+        });
+      },
+    });
+    t.field('room', {
+      type: 'Room',
+      resolve(root, _args, ctx) {
+        return ctx.prisma.room.findUnique({
+          where: {
+            id: root.roomId as number,
+          },
+        });
+      },
+    });
+  },
+});
 
 // Queries
 
@@ -122,6 +147,23 @@ const Query = objectType({
       type: 'Room',
       resolve(_, __, ctx) {
         return ctx.prisma.room.findMany();
+      },
+    });
+  },
+});
+
+const roomById = queryField('roomById', {
+  type: 'Room',
+  args: {
+    id: nonNull(intArg()),
+  },
+  resolve(_root, args, ctx) {
+    return ctx.prisma.room.findUnique({
+      where: {
+        id: args.id,
+      },
+      include: {
+        UsersInRoom: true,
       },
     });
   },
@@ -154,7 +196,6 @@ const createRoom = mutationField('createRoom', {
   type: 'Room',
   args: {
     name: nonNull(stringArg()),
-    users: nonNull(list(nonNull(intArg()))),
   },
   resolve(_root, args, ctx) {
     return ctx.prisma.room.create({
@@ -165,8 +206,49 @@ const createRoom = mutationField('createRoom', {
   },
 });
 
+// TODO look into optimizing to handle passing in an array of ids to add
+const addUserToRoom = mutationField('addUserToRoom', {
+  type: 'UsersInRoom',
+  args: {
+    userId: nonNull(intArg()),
+    roomId: nonNull(intArg()),
+  },
+  resolve(_root, args, ctx) {
+    return ctx.prisma.usersInRoom.create({
+      data: {
+        user: {
+          connect: {
+            id: args.userId,
+          },
+        },
+        room: {
+          connect: {
+            id: args.roomId,
+          },
+        },
+      },
+      include: {
+        user: true,
+        room: true,
+      },
+    });
+  },
+});
+
 export const schema = makeSchema({
-  types: [Query, Mutation, User, Message, Room, Profile, userById, createRoom],
+  types: [
+    Query,
+    Mutation,
+    User,
+    Message,
+    Room,
+    Profile,
+    UsersInRoom,
+    addUserToRoom,
+    roomById,
+    userById,
+    createRoom,
+  ],
   plugins: [nexusPrisma({ experimentalCRUD: true })],
   outputs: {
     schema: __dirname + '/../schema.graphql',

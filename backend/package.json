@@ -27,6 +27,7 @@
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only src/schema",
+    "migrate:dev": "prisma migrate dev --preview-feature",
     "dev": "ts-node-dev --no-notify --respawn --transpile-only src/server"
   },
   "keywords": [],

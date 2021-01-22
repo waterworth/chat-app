@@ -59,17 +59,21 @@ Deletes the dist/ folder.
 
 Deletes the old dist/ folder, generates prisma and nexus and then rebuilds the dist/ folder.
 
-#### `npm generate`
+#### `npm run generate`
 
 Generates both prisma and nexus code.
 
-#### `npm generate:prisma`
+#### `npm run generate:prisma`
 
 Generates the prisma schema into usable code.
 
-#### `npm generate:nexus`
+#### `npm run generate:nexus`
 
 Runs a uncompiled dev server with the updated graphql schema.
+
+#### `npm run migrate:dev`
+
+Migrates a preview version of the db for testing.
 
 ## To Do List
 

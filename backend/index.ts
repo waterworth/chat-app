@@ -4,8 +4,8 @@ const prisma = new PrismaClient();
 
 async function main() {
   // ... you will write your Prisma Client queries here
-  const allUsers = await prisma.room.findMany();
-  console.dir(allUsers, { depth: 2 });
+  const allUsersInRoom = await prisma.usersInRoom.findMany();
+  console.dir(allUsersInRoom, { depth: null });
 }
 
 main()
