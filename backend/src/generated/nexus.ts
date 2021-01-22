@@ -232,6 +232,7 @@ export interface NexusGenFieldTypes {
     addUserToRoom: NexusGenRootTypes['UsersInRoom'] | null; // UsersInRoom
     createMessage: NexusGenRootTypes['Message'] | null; // Message
     createRoom: NexusGenRootTypes['Room'] | null; // Room
+    deleteMessage: NexusGenRootTypes['Message'] | null; // Message
     signupUser: NexusGenRootTypes['User'] | null; // User
   }
   Profile: { // field return type
@@ -280,6 +281,7 @@ export interface NexusGenFieldTypeNames {
     addUserToRoom: 'UsersInRoom'
     createMessage: 'Message'
     createRoom: 'Room'
+    deleteMessage: 'Message'
     signupUser: 'User'
   }
   Profile: { // field return type name
@@ -327,6 +329,9 @@ export interface NexusGenArgTypes {
     }
     createRoom: { // args
       name: string; // String!
+    }
+    deleteMessage: { // args
+      id: number; // Int!
     }
     signupUser: { // args
       data: NexusGenInputs['UserCreateInput']; // UserCreateInput!

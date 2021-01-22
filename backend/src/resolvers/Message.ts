@@ -57,3 +57,31 @@ export const createMessage = mutationField('createMessage', {
     });
   },
 });
+
+/**
+ * Create a Message in a Room and assign it to a User
+ *
+ * @param id
+ * <Int!> — The id of the Message to delete 
+
+ * @example
+ *
+ *  mutation{
+ *    deleteMessage(id:1){
+ *      id
+ *    }
+ *
+ */
+export const deleteMessage = mutationField('deleteMessage', {
+  type: 'Message',
+  args: {
+    id: nonNull(intArg()),
+  },
+  resolve(_root, args, ctx) {
+    return ctx.prisma.message.delete({
+      where: {
+        id: args.id,
+      },
+    });
+  },
+});
