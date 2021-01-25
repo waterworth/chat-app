@@ -71,6 +71,10 @@ Generates the prisma schema into usable code.
 
 Runs a uncompiled dev server with the updated graphql schema.
 
+#### `npm run migrate:dev`
+
+Migrates a preview version of the db for testing.
+
 ## To Do List
 
 Front End:
