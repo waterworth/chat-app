@@ -89,7 +89,6 @@ export interface NexusGenFieldTypes {
     createNewUser: NexusGenRootTypes['User'] | null; // User
     createRoom: NexusGenRootTypes['Room'] | null; // Room
     deleteMessage: NexusGenRootTypes['Message'] | null; // Message
-    login: NexusGenRootTypes['User'] | null; // User
   }
   Profile: { // field return type
     bio: string | null; // String
@@ -137,7 +136,6 @@ export interface NexusGenFieldTypeNames {
     createNewUser: 'User'
     createRoom: 'Room'
     deleteMessage: 'Message'
-    login: 'User'
   }
   Profile: { // field return type name
     bio: 'String'
@@ -190,10 +188,6 @@ export interface NexusGenArgTypes {
     }
     deleteMessage: { // args
       id: number; // Int!
-    }
-    login: { // args
-      email: string; // String!
-      password: string; // String!
     }
   }
   Query: {

@@ -20,7 +20,6 @@ type Mutation {
   createNewUser(email: String!, name: String!, password: String!): User
   createRoom(name: String!): Room
   deleteMessage(id: Int!): Message
-  login(email: String!, password: String!): User
 }
 
 type Profile {

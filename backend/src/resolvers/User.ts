@@ -80,3 +80,5 @@ export const createNewUser = mutationField('createNewUser', {
     return user;
   },
 });
+
+// TODO add auth
