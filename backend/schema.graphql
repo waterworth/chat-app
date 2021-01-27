@@ -39,6 +39,10 @@ type Room {
   userList: [UsersInRoom]
 }
 
+type Subscription {
+  messages: Message
+}
+
 type User {
   email: String
   id: Int

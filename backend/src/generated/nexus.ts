@@ -51,6 +51,7 @@ export interface NexusGenObjects {
     id?: number | null; // Int
     name?: string | null; // String
   }
+  Subscription: {};
   User: { // root type
     email?: string | null; // String
     id?: number | null; // Int
@@ -104,6 +105,9 @@ export interface NexusGenFieldTypes {
     name: string | null; // String
     userList: Array<NexusGenRootTypes['UsersInRoom'] | null> | null; // [UsersInRoom]
   }
+  Subscription: { // field return type
+    messages: NexusGenRootTypes['Message'] | null; // Message
+  }
   User: { // field return type
     email: string | null; // String
     id: number | null; // Int
@@ -150,6 +154,9 @@ export interface NexusGenFieldTypeNames {
     messages: 'Message'
     name: 'String'
     userList: 'UsersInRoom'
+  }
+  Subscription: { // field return type name
+    messages: 'Message'
   }
   User: { // field return type name
     email: 'String'

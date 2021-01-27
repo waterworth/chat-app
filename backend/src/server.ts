@@ -1,38 +1,22 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
-import { createServer } from 'http';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { createContext } from './context';
-import { execute, subscribe } from 'graphql';
 import { schema } from './schema';
+import http from 'http';
 
-const WS_PORT = 5000;
-
-const websocketServer = createServer((request, response) => {
-  response.writeHead(404);
-  response.end();
-});
-websocketServer.listen(WS_PORT, () =>
-  console.log(`Websocket Server is now running on http://localhost:${WS_PORT}`)
-);
-
-const subscriptionServer = SubscriptionServer.create(
-  {
-    schema,
-    execute,
-    subscribe,
-  },
-  {
-    server: websocketServer,
-    path: '/graphql',
-  }
-);
-
-const server = new ApolloServer({ schema, context: createContext });
+const PORT = 4000;
 const app = express();
+const server = new ApolloServer({ schema });
 
 server.applyMiddleware({ app });
 
-app.listen({ port: 4000 }, () =>
-  console.log(`🚀🚀🚀 Server ready at: http://localhost:4000/graphql`)
-);
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+// ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
+httpServer.listen(PORT, () => {
+  console.log(
+    `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
+  );
+  console.log(
+    `🚀 Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`
+  );
+});
