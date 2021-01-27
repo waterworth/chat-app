@@ -2,82 +2,59 @@
 ### Do not make changes to this file directly
 
 
-input MessageCreateManyWithoutUserInput {
-  connect: [MessageWhereUniqueInput!]
-  connectOrCreate: [MessageCreateOrConnectWithoutuserInput!]
-  create: [MessageCreateWithoutUserInput!]
-}
+scalar DateTime
 
-input MessageCreateOrConnectWithoutuserInput {
-  create: MessageCreateWithoutUserInput!
-  where: MessageWhereUniqueInput!
-}
-
-input MessageCreateWithoutUserInput {
-  room: RoomCreateOneWithoutMessagesInput!
-  text: String!
-}
-
-input MessageWhereUniqueInput {
+type Message {
+  createdAt: DateTime
   id: Int
-}
-
-type Mutation {
-  signupUser(data: UserCreateInput!): User
-}
-
-input ProfileCreateOneWithoutUserInput {
-  connect: ProfileWhereUniqueInput
-  connectOrCreate: ProfileCreateOrConnectWithoutuserInput
-  create: ProfileCreateWithoutUserInput
-}
-
-input ProfileCreateOrConnectWithoutuserInput {
-  create: ProfileCreateWithoutUserInput!
-  where: ProfileWhereUniqueInput!
-}
-
-input ProfileCreateWithoutUserInput {
-  bio: String
-}
-
-input ProfileWhereUniqueInput {
-  id: Int
+  room: Room
+  roomId: Int
+  text: String
+  user: User
   userId: Int
 }
 
-type Query {
-  users: [User]
+type Mutation {
+  addUserToRoom(roomId: Int!, userId: Int!): UsersInRoom
+  createMessage(roomId: Int!, text: String!, userId: Int!): Message
+  createNewUser(email: String!, name: String!, password: String!): User
+  createRoom(name: String!): Room
+  deleteMessage(id: Int!): Message
 }
 
-input RoomCreateOneWithoutMessagesInput {
-  connect: RoomWhereUniqueInput
-  connectOrCreate: RoomCreateOrConnectWithoutmessagesInput
-  create: RoomCreateWithoutMessagesInput
-}
-
-input RoomCreateOrConnectWithoutmessagesInput {
-  create: RoomCreateWithoutMessagesInput!
-  where: RoomWhereUniqueInput!
-}
-
-input RoomCreateWithoutMessagesInput {
-  name: String!
-}
-
-input RoomWhereUniqueInput {
+type Profile {
+  bio: String
   id: Int
+}
+
+type Query {
+  roomById(id: Int!): Room
+  userById(id: Int!): User
+}
+
+type Room {
+  id: Int
+  messages: [Message]
+  name: String
+  userList: [UsersInRoom]
+}
+
+type Subscription {
+  messages: Message
 }
 
 type User {
   email: String
   id: Int
+  messages: [Message]
   name: String
+  password: String
+  profile: [Profile]
 }
 
-input UserCreateInput {
-  email: String!
-  Message: MessageCreateManyWithoutUserInput
-  name: String
-  profile: ProfileCreateOneWithoutUserInput
+type UsersInRoom {
+  room: Room
+  roomId: Int
+  user: User
+  userId: Int
 }

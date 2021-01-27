@@ -1,43 +1,16 @@
-import {
-  intArg,
-  makeSchema,
-  nonNull,
-  nullable,
-  objectType,
-  stringArg,
-} from 'nexus';
+import { makeSchema, objectType } from 'nexus';
 import { nexusPrisma } from 'nexus-plugin-prisma';
+import * as Message from './resolvers/Message';
+import * as ObjectTypes from './resolvers/ObjectTypes';
+import * as Room from './resolvers/Room';
+import * as User from './resolvers/User';
+import * as UsersInRoom from './resolvers/UsersInRoom';
+import * as Subscriptions from './resolvers/Subscriptions';
 
-const User = objectType({
-  name: 'User',
-  definition(t) {
-    t.model.id();
-    t.model.name();
-    t.model.email();
-  },
-});
-
-const Query = objectType({
-  name: 'Query',
-  definition(t) {
-    t.list.field('users', {
-      type: 'User',
-      resolve: (_, args, ctx) => {
-        return ctx.prisma.user.findMany();
-      },
-    });
-  },
-});
-
-const Mutation = objectType({
-  name: 'Mutation',
-  definition(t) {
-    t.crud.createOneUser({ alias: 'signupUser' });
-  },
-});
+// Create the schema
 
 export const schema = makeSchema({
-  types: [Query, Mutation, User],
+  types: [ObjectTypes, UsersInRoom, User, Room, Message, Subscriptions],
   plugins: [nexusPrisma({ experimentalCRUD: true })],
   outputs: {
     schema: __dirname + '/../schema.graphql',
