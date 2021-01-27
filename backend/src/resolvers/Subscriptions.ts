@@ -11,8 +11,10 @@ export const newMessageSubscription = subscriptionType({
       subscribe(_root, _args, ctx) {
         return ctx.pubsub.asyncIterator('messages');
       },
+
+      //   TODO Investigate "Cannot read property 'asyncIterator' of undefined", error
       async resolve(root, args, ctx) {
-        return ctx.pubsub.subscribe('messages');
+        return root;
       },
     });
   },
